@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+  db:
+    image: percona:8.0
+    networks:
+      - internal
+    env_file:
+      - .env
+#    volumes:
+#      - ./data/db:/var/lib/mysql
+    restart: on-failure
+
+  crust:
+    image: crusttech/crust-bundle:${VERSION}
+    networks:
+      - internal
+    env_file:
+      - .env
+    ports:
+      - 80
+    command: serve
+    environment:
+      VIRTUAL_HOST:     ${DOMAIN}
+      LETSENCRYPT_HOST: ${DOMAIN}
+    depends_on:
+      - db
+    restart: on-failure
+
+networks:
+  internal:
+#  proxy:
+#    external: true
