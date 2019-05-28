@@ -1,0 +1,27 @@
+workspace:
+  base: /go/src
+  path: github.com/crusttech/crust-bundle
+
+kind: pipeline
+name: docker image build
+
+steps:
+
+- name: crust-bundle
+  image: plugins/docker
+  settings:
+    repo: crusttech/crust-bundle
+    auto_tag: true # generate tag names automatically based on git branch and git tag
+    dockerfile: Dockerfile
+    username:
+      from_secret: docker_hub_username
+    password:
+      from_secret: docker_hub_password
+
+trigger:
+  branch:
+    - master
+  refs:
+    - refs/tags/v20??.*
+  event:
+    - push
