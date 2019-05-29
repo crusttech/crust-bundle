@@ -38,7 +38,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:191e46f5a5fbb2771dbcb8816ef0d345301180ca427ce7c4507fe16a716ef36f"
+  digest = "1:fcaf24ccdcccd46677735630f3b63b77840d4576a7398f79968ae29cfa6ba647"
   name = "github.com/cortezaproject/corteza-server"
   packages = [
     "compose",
@@ -77,7 +77,7 @@
     "monolith",
     "pkg/api",
     "pkg/cli",
-    "pkg/cli/flags",
+    "pkg/cli/options",
     "pkg/logger",
     "system",
     "system/commands",
@@ -92,7 +92,7 @@
     "system/types",
   ]
   pruneopts = "UT"
-  revision = "328bdeda070e6c84e9cf315f59da06e65e138dc5"
+  revision = "a8ae581e8f2f5d42cd4aa82d96df97980aff1ab0"
 
 [[projects]]
   branch = "v2"
@@ -288,7 +288,7 @@
   version = "v1.1.1"
 
 [[projects]]
-  digest = "1:e52d635a6b91d431baf2727978b4e999e1dfdf685527bd4b76b7ffe795da9763"
+  digest = "1:f0d8b3521fa1503abf153a0eaa9fbf285a52d3257d0eafe7021dbb44efc1107d"
   name = "github.com/markbates/goth"
   packages = [
     ".",
@@ -300,8 +300,8 @@
     "providers/openidConnect",
   ]
   pruneopts = "UT"
-  revision = "a3986c89570720dfc7c4b263e46a6d2c233d74cd"
-  version = "v1.52.0"
+  revision = "c7b58e2b7a1f73f10757c3b302aed6e421949d6a"
+  version = "v1.53.0"
 
 [[projects]]
   digest = "1:ff5ebae34cfbf047d505ee150de27e60570e8c394b3b8fdbb720ff6ac71985fc"
@@ -520,14 +520,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:bcda99305ea2ecb439daf3711573f8b80f2bb90782e2e7ba98095fe68f4efd44"
+  digest = "1:820be5471f9063bf539a8e4acfcf71151c832932c6ae6aab5aa0e8957e5af173"
   name = "golang.org/x/sys"
   packages = [
     "unix",
     "windows",
   ]
   pruneopts = "UT"
-  revision = "abf6ff778158be18fc3dadf08deffdaf3cc2df5f"
+  revision = "6a60838ec2595395fabc7b2e6c2ae9fb5a87722d"
 
 [[projects]]
   digest = "1:1093f2eb4b344996604f7d8b29a16c5b22ab9e1b25652140d3fede39f640d5cd"
@@ -604,11 +604,10 @@
     "github.com/cortezaproject/corteza-server/monolith",
     "github.com/cortezaproject/corteza-server/pkg/api",
     "github.com/cortezaproject/corteza-server/pkg/cli",
-    "github.com/cortezaproject/corteza-server/pkg/cli/flags",
+    "github.com/cortezaproject/corteza-server/pkg/cli/options",
     "github.com/cortezaproject/corteza-server/pkg/logger",
     "github.com/go-chi/chi",
     "github.com/joho/godotenv/autoload",
-    "github.com/spf13/cobra",
     "go.uber.org/zap",
   ]
   solver-name = "gps-cdcl"

@@ -9,10 +9,10 @@ import (
 
 	"github.com/cortezaproject/corteza-server/monolith"
 	"github.com/cortezaproject/corteza-server/pkg/cli"
-	"github.com/cortezaproject/corteza-server/pkg/cli/flags"
+	"github.com/cortezaproject/corteza-server/pkg/cli/options"
+
 	"github.com/go-chi/chi"
 	_ "github.com/joho/godotenv/autoload"
-	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 
 	"github.com/cortezaproject/corteza-server/pkg/api"
@@ -33,6 +33,10 @@ func Configure() *cli.Config {
 	var bundle = &cli.Config{}
 	*bundle = *mono
 
+	enableWebappOpt = options.EnvBool("", "WEBAPP_ENABLE", true)
+	webappFsDirOpt = options.EnvString("", "WEBAPP_FSDIR", "/webapp")
+	webappAppsOpt = options.EnvString("", "WEBAPP_APPS", "admin,auth,messaging,compose")
+
 	bundle.RootCommandName = "crust-bundle"
 	bundle.ApiServerCommandName = "serve"
 	bundle.ApiServer = api.NewServer(bundle.Log)
@@ -47,20 +51,6 @@ func Configure() *cli.Config {
 			}
 		},
 	}
-
-	bundle.ApiServerAdtFlags = append(bundle.ApiServerAdtFlags, func(cmd *cobra.Command, c *cli.Config) {
-		flags.BindBool(cmd, &enableWebappOpt,
-			"webapp-enable", true,
-			"Enable end serve webapp")
-
-		flags.BindString(cmd, &webappFsDirOpt,
-			"webapp-fsdir", "/webapp",
-			"Web dir/root for webapps")
-
-		flags.BindString(cmd, &webappAppsOpt,
-			"webapp-apps", "admin,auth,messaging,compose",
-			"List of comma separated apps we serve")
-	})
 
 	return bundle
 }
