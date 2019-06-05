@@ -92,7 +92,7 @@
     "system/types",
   ]
   pruneopts = "UT"
-  revision = "a8ae581e8f2f5d42cd4aa82d96df97980aff1ab0"
+  revision = "59d315c07911c397f81745555d375a2d2a8e2123"
 
 [[projects]]
   branch = "v2"
