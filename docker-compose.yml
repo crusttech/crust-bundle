@@ -1,33 +1,32 @@
-version: '3.1'
+version: '2.0'
 
 services:
   db:
     image: percona:8.0
-    networks:
-      - internal
-    env_file:
-      - .env
-#    volumes:
-#      - ./data/db:/var/lib/mysql
+    networks: [ internal ]
     restart: on-failure
+    environment:
+      # To be picked up by percona image when creating the database
+      # Must match with DB_DSN settings inside .env
+      MYSQL_DATABASE:      crust
+      MYSQL_USER:          crust
+      MYSQL_PASSWORD:      change-me
+      MYSQL_ROOT_PASSWORD: change-me-too
+
+#    volumes: [ "./data/db:/var/lib/mysql" ] # use local fs
+#    volumes: [ "db:/var/lib/mysql" ]        # use internal docker volume
 
   crust:
     image: crusttech/crust-bundle:${VERSION}
-    networks:
-      - internal
-    env_file:
-      - .env
-    ports:
-      - 80
-    command: serve
+    restart: on-failure
+    networks: [ internal, proxy ]
+    env_file: [ .env ]
+    depends_on: [ db ]
     environment:
       VIRTUAL_HOST:     ${DOMAIN}
       LETSENCRYPT_HOST: ${DOMAIN}
-    depends_on:
-      - db
-    restart: on-failure
+#    volumes: [ "./data/server-compose:/data" ] # use local fs
+#    volumes: [ "server-data:/data" ]                # use internal docker volume
 
-networks:
-  internal:
-#  proxy:
-#    external: true
+networks: { internal: {}, proxy: { external: true } }
+#volumes: { db: {}, server-data: {} }
