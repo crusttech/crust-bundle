@@ -97,7 +97,7 @@ func serveIndex(assetPath string, indexPath string, serve http.Handler) http.Han
 
 func serveConfig(r chi.Router, basedir string) {
 	r.HandleFunc(strings.TrimRight(basedir, "/")+"/config.js", func(w http.ResponseWriter, r *http.Request) {
-		const line = "window.Crust%sAPI = `/api/%s`\n"
+		const line = "window.%sAPI = `/api/%s`\n"
 		_, _ = fmt.Fprintf(w, line, "System", "system")
 		_, _ = fmt.Fprintf(w, line, "Messaging", "messaging")
 		_, _ = fmt.Fprintf(w, line, "Compose", "compose")
