@@ -33,17 +33,24 @@ func Configure() *cli.Config {
 	var bundle = &cli.Config{}
 	*bundle = *mono
 
+	// Move API under /api and set it as a monolith build
+	api.BaseURL = "/api"
+	api.Monolith = true
+
 	enableWebappOpt = options.EnvBool("", "WEBAPP_ENABLE", true)
 	webappFsDirOpt = options.EnvString("", "WEBAPP_FSDIR", "/webapp")
 	webappAppsOpt = options.EnvString("", "WEBAPP_APPS", "admin,auth,messaging,compose")
 
 	bundle.RootCommandName = "crust-bundle"
+
+	// Rename the command, we're no longer serving just API
+
 	bundle.ApiServerCommandName = "serve"
 	bundle.ApiServer = api.NewServer(bundle.Log)
 	bundle.ApiServerRoutes = cli.Mounters{
 		func(r chi.Router) {
 			// Wrap all routes from monolith dist under /api
-			r.Route("/api", mono.ApiServerRoutes.MountRoutes)
+			r.Route(api.BaseURL, mono.ApiServerRoutes.MountRoutes)
 
 			if enableWebappOpt {
 				// Serve static files directly from FS
@@ -97,9 +104,9 @@ func serveIndex(assetPath string, indexPath string, serve http.Handler) http.Han
 
 func serveConfig(r chi.Router, basedir string) {
 	r.HandleFunc(strings.TrimRight(basedir, "/")+"/config.js", func(w http.ResponseWriter, r *http.Request) {
-		const line = "window.%sAPI = `/api/%s`\n"
-		_, _ = fmt.Fprintf(w, line, "System", "system")
-		_, _ = fmt.Fprintf(w, line, "Messaging", "messaging")
-		_, _ = fmt.Fprintf(w, line, "Compose", "compose")
+		const line = "window.%sAPI = `%s/%s`\n"
+		_, _ = fmt.Fprintf(w, line, "System", api.BaseURL, "system")
+		_, _ = fmt.Fprintf(w, line, "Messaging", api.BaseURL, "messaging")
+		_, _ = fmt.Fprintf(w, line, "Compose", api.BaseURL, "compose")
 	})
 }
