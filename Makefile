@@ -11,7 +11,7 @@ build: dep
 push:
 	docker push $(REPOSITORY):$(IMAGE_TAG)
 
-dep: $(DEP)
+cdep: $(DEP)
 	$(DEP) ensure -update github.com/cortezaproject/corteza-server
 
 $(DEP):
