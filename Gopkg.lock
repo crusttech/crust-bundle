@@ -38,7 +38,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:198532eea65602cdfb2612cea3f98a3b09eae298665a9f366ed220c74601607d"
+  digest = "1:38f9bc5c83eba722bb368a968ff1a10871ce4eeb394b9c819b5b4559960bd66a"
   name = "github.com/cortezaproject/corteza-server"
   packages = [
     "compose",
@@ -92,7 +92,7 @@
     "system/types",
   ]
   pruneopts = "UT"
-  revision = "5f7bd696cfae0408a9f60fb5216ca60dbe7453d2"
+  revision = "12c7ae682d29167d6b2adce8ae8650d1c3ceb3fb"
 
 [[projects]]
   branch = "v2"
@@ -616,10 +616,8 @@
     "github.com/cortezaproject/corteza-server/pkg/api",
     "github.com/cortezaproject/corteza-server/pkg/cli",
     "github.com/cortezaproject/corteza-server/pkg/cli/options",
-    "github.com/cortezaproject/corteza-server/pkg/logger",
     "github.com/go-chi/chi",
     "github.com/joho/godotenv/autoload",
-    "go.uber.org/zap",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
