@@ -8,16 +8,11 @@ import (
 	"strings"
 
 	"github.com/cortezaproject/corteza-server/monolith"
+	"github.com/cortezaproject/corteza-server/pkg/api"
 	"github.com/cortezaproject/corteza-server/pkg/cli"
 	"github.com/cortezaproject/corteza-server/pkg/cli/options"
-
 	"github.com/go-chi/chi"
 	_ "github.com/joho/godotenv/autoload"
-	"go.uber.org/zap"
-
-	"github.com/cortezaproject/corteza-server/pkg/api"
-
-	"github.com/cortezaproject/corteza-server/pkg/logger"
 )
 
 var (
@@ -71,11 +66,12 @@ func serveWebapp(r chi.Router) {
 	for _, app := range strings.Split(webappAppsOpt, ",") {
 		basedir := path.Join(webappWebDirOpt, app)
 		serveConfig(r, basedir)
-		r.HandleFunc(basedir+"*", serveIndex(webappFsDirOpt, "index.html", fileserver))
+
+		r.HandleFunc(basedir+"*", serveIndex(webappFsDirOpt, basedir+"/index.html", fileserver))
 	}
 
 	serveConfig(r, webappWebDirOpt)
-	r.HandleFunc(webappWebDirOpt+"*", serveIndex(webappFsDirOpt, "index.html", fileserver))
+	r.HandleFunc(webappWebDirOpt+"*", serveIndex(webappFsDirOpt, webappWebDirOpt+"/index.html", fileserver))
 
 }
 
@@ -85,14 +81,6 @@ func serveIndex(assetPath string, indexPath string, serve http.Handler) http.Han
 		indexPage := path.Join(assetPath, indexPath)
 		requestedPage := path.Join(assetPath, r.URL.Path)
 		_, err := os.Stat(requestedPage)
-
-		logger.Default().Info(r.URL.String(),
-			zap.String("webappFsDirOpt", webappFsDirOpt),
-			zap.String("webappAppsOpt", webappAppsOpt),
-			zap.String("assetPath", assetPath),
-			zap.String("indexPath", indexPath),
-			zap.Error(err),
-		)
 
 		if err != nil {
 			http.ServeFile(w, r, indexPage)
