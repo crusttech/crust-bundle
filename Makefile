@@ -1,5 +1,7 @@
 .PHONY: build push dep
 
+GO          = go
+GOGET       = $(GO) get -u
 DEP         = $(GOPATH)/bin/dep
 REPOSITORY  = crusttech/crust-bundle
 BRANCH     ?= $(shell git rev-parse --abbrev-ref HEAD)
@@ -11,7 +13,7 @@ build: dep
 push:
 	docker push $(REPOSITORY):$(IMAGE_TAG)
 
-cdep: $(DEP)
+cdeps: $(DEP)
 	$(DEP) ensure -update github.com/cortezaproject/corteza-server
 
 $(DEP):
