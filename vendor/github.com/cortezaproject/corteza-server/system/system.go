@@ -55,10 +55,15 @@ func Configure() *cli.Config {
 				if c.ProvisionOpt.AutoSetup {
 					cli.HandleError(accessControlSetup(ctx, cmd, c))
 					cli.HandleError(makeDefaultApplications(ctx, cmd, c))
+
 					cli.HandleError(discoverSettings(ctx, cmd, c))
 
-					// Run auto configuration
-					commands.SettingsAutoConfigure(cmd)
+					// Reload auto-configured settings
+					// adding externals and oidc auto discovery depends on redirect-url setting
+					service.DefaultAuthSettings, _ = service.DefaultSettings.LoadAuthSettings()
+
+					cli.HandleError(authAddExternals(ctx, cmd, c))
+					cli.HandleError(oidcAutoDiscovery(ctx, cmd, c))
 
 					// Reload auto-configured settings
 					service.DefaultAuthSettings, _ = service.DefaultSettings.LoadAuthSettings()
