@@ -13,15 +13,8 @@ steps:
     repo: crusttech/crust-bundle
     auto_tag: true # generate tag names automatically based on git branch and git tag
     dockerfile: Dockerfile
-    username:
-      from_secret: docker_hub_username
-    password:
-      from_secret: docker_hub_password
+    username: { from_secret: docker_hub_username }
+    password: { from_secret: docker_hub_password }
 
 trigger:
-  branch:
-    - master
-  refs:
-    - refs/tags/v20??.*
-  event:
-    - push
+  event: [ tag, push ]

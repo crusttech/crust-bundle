@@ -2,7 +2,7 @@
 
 FROM cortezaproject/corteza-server-builder:latest AS builder
 
-WORKDIR /go/src/github.com/crusttech/crust-bundle
+WORKDIR /crust/src
 
 COPY . .
 
