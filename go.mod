@@ -3,7 +3,7 @@ module github.com/crusttech/crust-bundle
 go 1.12
 
 require (
-	github.com/cortezaproject/corteza-server v0.0.0-20191009171605-d67d60a3dd7f
+	github.com/cortezaproject/corteza-server v0.0.0-20191021084042-941ae38cb626
 	github.com/go-chi/chi v3.3.4+incompatible
 	github.com/joho/godotenv v1.3.0
 	github.com/lib/pq v1.1.1 // indirect
